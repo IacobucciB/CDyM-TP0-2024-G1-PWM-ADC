@@ -19,7 +19,7 @@ int main(void){
 	RGB_init();
 	sei();
 	
-	RGB_setColor(0,0,0);
+	RGB_setColor(0,255,0);
 
 	
 	

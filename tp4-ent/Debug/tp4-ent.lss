@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000c8  00000000  00000000  0000030c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000b8a  00000000  00000000  000003d4  2**0
+  6 .debug_info   00000b8b  00000000  00000000  000003d4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000008f5  00000000  00000000  00000f5e  2**0
+  7 .debug_abbrev 000008f5  00000000  00000000  00000f5f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000005e5  00000000  00000000  00001853  2**0
+  8 .debug_line   000005e5  00000000  00000000  00001854  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000174  00000000  00000000  00001e38  2**2
+  9 .debug_frame  00000174  00000000  00000000  00001e3c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000004ac  00000000  00000000  00001fac  2**0
+ 10 .debug_str    000004ac  00000000  00000000  00001fb0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000001ca  00000000  00000000  00002458  2**0
+ 11 .debug_loc    000001ca  00000000  00000000  0000245c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000088  00000000  00000000  00002622  2**0
+ 12 .debug_ranges 00000088  00000000  00000000  00002626  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -166,9 +166,9 @@ int main(void){
 	sei();
   e2:	78 94       	sei
 	
-	RGB_setColor(0,0,0);
+	RGB_setColor(0,255,0);
   e4:	40 e0       	ldi	r20, 0x00	; 0
-  e6:	60 e0       	ldi	r22, 0x00	; 0
+  e6:	6f ef       	ldi	r22, 0xFF	; 255
   e8:	80 e0       	ldi	r24, 0x00	; 0
   ea:	0e 94 fe 00 	call	0x1fc	; 0x1fc <RGB_setColor>
 

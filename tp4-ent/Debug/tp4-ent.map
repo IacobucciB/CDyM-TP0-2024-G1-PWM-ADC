@@ -445,13 +445,13 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xb8a
+.debug_info     0x00000000      0xb8b
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/Atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4       0xb7 adc.o
- .debug_info    0x000006ab      0x1c8 main.o
- .debug_info    0x00000873      0x141 pwm.o
- .debug_info    0x000009b4      0x1d6 rgb.o
+ .debug_info    0x000006ab      0x1c9 main.o
+ .debug_info    0x00000874      0x141 pwm.o
+ .debug_info    0x000009b5      0x1d6 rgb.o
 
 .debug_abbrev   0x00000000      0x8f5
  *(.debug_abbrev)
