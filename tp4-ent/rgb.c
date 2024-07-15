@@ -6,9 +6,9 @@ void RGB_init() {
 }
 
 void RGB_setColor(uint8_t red, uint8_t green, uint8_t blue) {
-	PWM_setDutyCycle(PORTB2, red);
+	PWM_setDutyCycle(PORTB2, blue);
 	PWM_setDutyCycle(PORTB1, green);
-	PWM_setDutyCycle(PORTB5, blue);
+	PWM_setDutyCycle(PORTB5, red);
 }
 
 void RGB_setRed() {
