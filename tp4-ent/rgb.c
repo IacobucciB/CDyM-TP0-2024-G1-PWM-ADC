@@ -15,13 +15,13 @@ void RGB_setSingleColor(char color, uint8_t duty) {
 	switch (color)
 	{
 		case 'R':
-		PWM_setDutyCycle(PORTB5, color);
+		PWM_setDutyCycle(PORTB5, duty);
 		break;
 		case 'G':
-		PWM_setDutyCycle(PORTB1, color);
+		PWM_setDutyCycle(PORTB1, duty);
 		break;
 		case 'B':
-		PWM_setDutyCycle(PORTB2, color);
+		PWM_setDutyCycle(PORTB2, duty);
 		break;
 		default:
 		break;

@@ -18,30 +18,20 @@ uint8_t RGB_setBrightness() {
 
 // Function to process UART command and set corresponding color
 void processCommand(char channel) {
-	uint8_t brightness = RGB_setBrightness();
 	switch (channel) {
 		case 'R':
-		RGB_setRed();
 		UART_sendString("R");
 		break;
 		case 'G':
-		RGB_setGreen();
 		UART_sendString("G");
 		break;
 		case 'B':
-		RGB_setBlue();
 		UART_sendString("B");
 		break;
 		default:
 		// UART_sendString(novalido);
 		return;
 	}
-	// Send brightness value as string
-	
-	sprintf(str, "%u", brightness);
-	UART_sendString(str);
-	UART_sendString("\n\r");
-	
 }
 
 int main(void) {
@@ -63,12 +53,26 @@ int main(void) {
 	// Send welcome message
 	UART_sendString(bienvenida);
 
+	char channel = 'R'; // Default channel
+	uint8_t brightness;
+
 	while(1) {
 		if (UART_hayComando()) {
-			char channel = UART_getComando();
+			channel = UART_getComando();
 			processCommand(channel);
+			
+			sprintf(str, "%u", brightness);
+			UART_sendString(str);
+			UART_sendString("\n\r");
+			
 			UART_setHayComando();
 		}
+
+		brightness = RGB_setBrightness();
+		RGB_setSingleColor(channel, brightness);
+
+		// Send brightness value as string
+
 	}
 
 	return 0;
