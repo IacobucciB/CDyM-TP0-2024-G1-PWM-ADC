@@ -11,14 +11,31 @@ void RGB_setColor(uint8_t red, uint8_t green, uint8_t blue) {
 	PWM_setDutyCycle(PORTB5, red);
 }
 
+void RGB_setSingleColor(char color, uint8_t duty) {
+	switch (color)
+	{
+		case 'R':
+		PWM_setDutyCycle(PORTB5, color);
+		break;
+		case 'G':
+		PWM_setDutyCycle(PORTB1, color);
+		break;
+		case 'B':
+		PWM_setDutyCycle(PORTB2, color);
+		break;
+		default:
+		break;
+	}
+}
+
 void RGB_setRed() {
-	RGB_setColor(255, 0, 0);
+	RGB_setColor(120, 0, 0);
 }
 
 void RGB_setGreen() {
-	RGB_setColor(0, 255, 0);
+	RGB_setColor(0, 120, 0);
 }
 
 void RGB_setBlue() {
-	RGB_setColor(0, 0, 255);
+	RGB_setColor(0, 0, 120);
 }
