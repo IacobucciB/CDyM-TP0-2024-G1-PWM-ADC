@@ -1,23 +1,21 @@
 #include "main.h"
 
-// Function prototypes
 uint8_t RGB_setBrightness(void);
 void processCommand(char channel);
 
-// Static variables
 static char bienvenida[] = "Controlador RGB \n\r Ingrese R, G o B para cambiar la intensidad del color seleccionado \n\r ";
-//static char novalido[] = "ERROR: Comando no valido\n\r";
-static char str[4];
 
 // Function to set brightness based on ADC reading
-uint8_t RGB_setBrightness() {
-	uint16_t adc_value = ADC_read(3); // Leer valor del potenciómetro conectado al ADC3 (PC3)
+uint8_t RGB_setBrightness() 
+{
+	uint16_t adc_value = ADC_read(3); // Leer valor del potenciometro conectado al ADC3 (PC3)
 	uint8_t brightness = adc_value / 4; // Escalar el valor ADC (0-1023) a PWM (0-255)
 	return brightness;
 }
 
 // Function to process UART command and set corresponding color
-void processCommand(char channel) {
+void processCommand(char channel) 
+{
 	switch (channel) {
 		case 'R':
 		UART_sendString("R");
@@ -29,12 +27,13 @@ void processCommand(char channel) {
 		UART_sendString("B");
 		break;
 		default:
-		// UART_sendString(novalido);
+		UART_sendString("N");
 		return;
 	}
 }
 
-int main(void) {
+int main(void)
+{
 	DDRC = 0x00; // Set PORTC as input
 	UART_init();
 	RGB_init();
@@ -56,24 +55,17 @@ int main(void) {
 	char channel = 'R'; // Default channel
 	uint8_t brightness;
 
-	while(1) {
-		if (UART_hayComando()) {
+	while(1)
+	{
+		if (UART_hayComando()) 
+		{
 			channel = UART_getComando();
 			processCommand(channel);
-			
-			sprintf(str, "%u", brightness);
-			UART_sendString(str);
 			UART_sendString("\n\r");
-			
 			UART_setHayComando();
 		}
-
 		brightness = RGB_setBrightness();
 		RGB_setSingleColor(channel, brightness);
-
-		// Send brightness value as string
-
 	}
-
 	return 0;
 }

@@ -7,7 +7,7 @@ volatile char RX_Buffer=0;
 
 static unsigned char hayString = 0;
 
-volatile int transmision_activa = 1; // Bandera para indicar si la transmisión está activa (1) o detenida (0)
+volatile int transmision_activa = 1; // Bandera para indicar si la transmisiï¿½n estï¿½ activa (1) o detenida (0)
 volatile unsigned char nuevoDato = 0;
 
 static int nuevoComando = 0;
@@ -16,20 +16,20 @@ void UART_init(){
 	SerialPort_Init(0x67); // inicializar puerto serie
 	SerialPort_TX_Enable(); // habilitar transmisor TX
 	SerialPort_RX_Enable(); // habilitar receptor RX
-	SerialPort_RX_Interrupt_Enable(); // habilitar interrupciones de recepción
+	SerialPort_RX_Interrupt_Enable(); // habilitar interrupciones de recepciï¿½n
 }
 
 void UART_sendString(char* s){
 	unsigned char indice = 0;
 	while(s[indice] != '\0'){ // Mientras no llegue al fin de la cadena
-		if(TX_indiceescritura < 105){ // si el índice es menor al tamaño máximo del buffer
-			TX_Buffer[TX_indiceescritura] = s[indice]; // Guardar carácter en buffer
+		if(TX_indiceescritura < 105){ // si el ï¿½ndice es menor al tamaï¿½o mï¿½ximo del buffer
+			TX_Buffer[TX_indiceescritura] = s[indice]; // Guardar carï¿½cter en buffer
 			TX_indiceescritura++;
 		}
 		indice++;
 	}
 	hayString = 1; // Activo flag
-	SerialPort_TX_Interrupt_Enable(); // Activo interrupción de transmisión
+	SerialPort_TX_Interrupt_Enable(); // Activo interrupciï¿½n de transmisiï¿½n
 }
 
 char UART_hayComando(){
@@ -41,7 +41,7 @@ void UART_setHayComando(){
 }
 
 char UART_getComando(){
-	return RX_Buffer; // Retorna el carácter recibido
+	return RX_Buffer; // Retorna el carï¿½cter recibido
 }
 
 ISR(USART_RX_vect){
@@ -59,7 +59,7 @@ ISR(USART_UDRE_vect){
 			hayString = 0; // Termino de transmitir
 			TX_indicelectura = 0;
 			TX_indiceescritura = 0;
-			SerialPort_TX_Interrupt_Disable(); // Deshabilitar interrupción de transmisión
+			SerialPort_TX_Interrupt_Disable(); // Deshabilitar interrupciï¿½n de transmisiï¿½n
 		}
 	}
 }
