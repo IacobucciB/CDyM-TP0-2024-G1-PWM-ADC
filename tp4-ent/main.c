@@ -1,45 +1,71 @@
-#include <avr/io.h>
-#define F_CPU 16000000UL
-#include <avr/delay.h>
-#include <avr/interrupt.h>
+#include "main.h"
 
-// PWM MACROS
-#define PWM_PERIOD 20
-#define PWM_DELTA 19
-#define PWM_OFF PORTB &= ~(1<<PORTB5)
-#define PWM_ON PORTB |= (1<<PORTB5)
-#define PWM_START DDRB |= (1<<PORTB5)
+uint8_t RGB_setBrightness(void);
+void processCommand(char channel);
 
-// PWM SOFTWARE UPDATE
-void PWM_soft_update(void){
-	static uint8_t PWM_position = 0;
-	if(++PWM_position>=PWM_PERIOD){
-		PWM_position = 0;
-	}
-	if(PWM_position<PWM_DELTA){
-		PWM_ON;
-		} else {
-		PWM_OFF;
-	}
+static char bienvenida[] = "Controlador RGB \n\r Ingrese R, G o B para cambiar la intensidad del color seleccionado \n\r ";
+
+// Function to set brightness based on ADC reading
+uint8_t RGB_setBrightness() 
+{
+	uint16_t adc_value = ADC_read(3); // Leer valor del potenciometro conectado al ADC3 (PC3)
+	uint8_t brightness = adc_value / 4; // Escalar el valor ADC (0-1023) a PWM (0-255)
+	return brightness;
 }
 
-// INTERRUPTION
-ISR(TIMER0_COMPA_vect){
-	PWM_soft_update();
-}
-
-int main(void){
-	
-	DDRB |= (1<<PORTB5) | (1<<PORTB2) | (1<<PORTB1);
-	
-	TCCR0A |= (1<<COM0A1) | (1<<WGM01) | (1<<WGM00);
-	TCCR0B |= (1<<CS01) | (1<<CS00);
-	OCR0A = 249;
-	
-	TIMSK0 |= (1<<OCIE0A);
-	sei();
-	
-	while(1){
+// Function to process UART command and set corresponding color
+void processCommand(char channel) 
+{
+	switch (channel) {
+		case 'R':
+		UART_sendString("R");
+		break;
+		case 'G':
+		UART_sendString("G");
+		break;
+		case 'B':
+		UART_sendString("B");
+		break;
+		default:
+		UART_sendString("N");
+		return;
 	}
 }
 
+int main(void)
+{
+	DDRC = 0x00; // Set PORTC as input
+	UART_init();
+	RGB_init();
+	ADC_init();
+	sei(); // Enable global interrupts
+
+	// Initial RGB color setup
+	RGB_setRed();
+	_delay_ms(100);
+	RGB_setGreen();
+	_delay_ms(100);
+	RGB_setBlue();
+	_delay_ms(100);
+	RGB_setColor(255, 255, 255);
+
+	// Send welcome message
+	UART_sendString(bienvenida);
+
+	char channel = 'R'; // Default channel
+	uint8_t brightness;
+
+	while(1)
+	{
+		if (UART_hayComando()) 
+		{
+			channel = UART_getComando();
+			processCommand(channel);
+			UART_sendString("\n\r");
+			UART_setHayComando();
+		}
+		brightness = RGB_setBrightness();
+		RGB_setSingleColor(channel, brightness);
+	}
+	return 0;
+}
