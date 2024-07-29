@@ -21,10 +21,10 @@ void RGB_setSingleColor(char color, uint8_t duty)
 		PWM_setDutyCycle(PORTB5, duty);
 		break;
 		case 'G':
-		PWM_setDutyCycle(PORTB1, duty);
+		PWM_setDutyCycle(PORTB2, duty);
 		break;
 		case 'B':
-		PWM_setDutyCycle(PORTB2, duty);
+		PWM_setDutyCycle(PORTB1, duty);
 		break;
 		default:
 		break;

@@ -572,14 +572,14 @@ void RGB_setSingleColor(char color, uint8_t duty)
 		break;
  30e:	08 95       	ret
 		case 'G':
-		PWM_setDutyCycle(PORTB1, duty);
- 310:	81 e0       	ldi	r24, 0x01	; 1
+		PWM_setDutyCycle(PORTB2, duty);
+ 310:	82 e0       	ldi	r24, 0x02	; 2
  312:	0e 94 03 01 	call	0x206	; 0x206 <PWM_setDutyCycle>
 		break;
  316:	08 95       	ret
 		case 'B':
-		PWM_setDutyCycle(PORTB2, duty);
- 318:	82 e0       	ldi	r24, 0x02	; 2
+		PWM_setDutyCycle(PORTB1, duty);
+ 318:	81 e0       	ldi	r24, 0x01	; 1
  31a:	0e 94 03 01 	call	0x206	; 0x206 <PWM_setDutyCycle>
  31e:	08 95       	ret
 
